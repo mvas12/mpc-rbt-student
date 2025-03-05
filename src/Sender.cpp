@@ -23,7 +23,9 @@ void Sender::Node::onDataTimerTick()
     .port = config.remotePort,
     .address = config.remoteAddress,
   };
-  RCLCPP_INFO(logger, "Sending data to host: '%s:%d'", frame.address.c_str(), frame.port);
+  Utils::Message::deserialize(frame,data);
+  send(frame);
+  RCLCPP_INFO(logger, "sending data to host:'%s: %d'", frame.address.c_str(), frame.port);
 
   RCLCPP_INFO(logger, "\n\tstamp: %ld", data.timestamp);
 }
